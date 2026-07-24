@@ -1,0 +1,423 @@
+/* === STILI GENERALI E TEMA === */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #0b0d17;
+    --border-blue: #00a8ff;
+    --btn-yellow: #fbc531;
+    --text-light: #f5f6fa;
+    --type-erba: #4cd137;
+    --type-normale: #b2bec3;
+    --type-fuoco: #e84118;
+    --type-acqua: #00a8ff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    color: var(--text-light);
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+h1, h2, h3, .pixel-font {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* === MENU PRINCIPALE === */
+.logo {
+    font-size: 48px;
+    color: var(--btn-yellow);
+    text-shadow: 0 0 10px rgba(251, 197, 49, 0.8), 0 0 20px rgba(0, 168, 255, 0.8);
+    margin-bottom: 60px;
+    letter-spacing: 5px;
+}
+
+.menu-buttons {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.btn {
+    background: transparent;
+    border: 2px solid var(--border-blue);
+    color: var(--border-blue);
+    padding: 20px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(0, 168, 255, 0.2) inset;
+}
+
+.btn:hover:not(.disabled) {
+    background: rgba(0, 168, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 168, 255, 0.5) inset;
+}
+
+.btn.primary {
+    border-color: var(--btn-yellow);
+    color: var(--btn-yellow);
+    box-shadow: 0 0 10px rgba(251, 197, 49, 0.2) inset;
+    padding: 25px 40px;
+    font-size: 18px;
+}
+
+.btn.primary:hover {
+    background: rgba(251, 197, 49, 0.1);
+    box-shadow: 0 0 20px rgba(251, 197, 49, 0.5) inset;
+}
+
+.btn.disabled {
+    border-color: #555;
+    color: #555;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    font-size: 12px;
+    z-index: 1000;
+}
+
+/* === DECK LIST (SCELTA DECK) === */
+.deck-list-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.deck-slot {
+    width: 200px;
+    height: 300px;
+    border: 3px dashed var(--border-blue);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    color: var(--border-blue);
+    cursor: pointer;
+    transition: 0.3s;
+    background-size: cover;
+    background-position: center;
+}
+
+.deck-slot:hover {
+    background-color: rgba(0, 168, 255, 0.1);
+}
+
+.deck-slot.created {
+    border-style: solid;
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.deck-name-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    text-align: center;
+    background: rgba(0,0,0,0.6);
+    width: 100%;
+    padding: 10px 0;
+    margin-top: auto;
+}
+
+/* === DECK EDITOR (COSTRUZIONE MAZZO) === */
+#deck-editor-menu {
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.deck-section {
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+    background: rgba(0,0,0,0.5);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.deck-section h3 {
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 15px;
+    color: var(--btn-yellow);
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.card-slot-btn {
+    width: 100%;
+    aspect-ratio: 2.5/3.5;
+    border: 2px dashed #555;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #555;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    transition: 0.2s;
+    position: relative;
+}
+
+.card-slot-btn:hover {
+    border-color: var(--text-light);
+    color: var(--text-light);
+    z-index: 100;
+}
+
+/* === DESIGN DELLE CARTE === */
+.card-render {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #222;
+    position: relative;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.card-character {
+    border: 4px solid;
+}
+
+/* === STILE CARTE FULL ART (PERSONAGGI) === */
+.card-character-fullart {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    border: 3px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    font-family: sans-serif;
+}
+
+.card-character-fullart::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.fullart-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+}
+
+.fullart-name {
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 3px rgba(0,0,0,1), -1px -1px 3px rgba(0,0,0,1);
+}
+
+.cost-indicator {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+}
+
+.cost-indicator::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    background-image: url('../img/cardLayout/indicatorBorder.png');
+    background-size: cover;
+    background-position: center;
+    mix-blend-mode: screen;
+    z-index: -1;
+}
+
+.fullart-moves {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 15px;
+    text-align: center;
+}
+
+.fullart-move-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.fullart-move-text {
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,1), -1px -1px 3px rgba(0,0,0,1);
+}
+
+.card-character-fullart, .card-render {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s ease-in-out, z-index 0s;
+    transform-origin: center;
+}
+
+/* === MODALE SCELTA CARTE === */
+#card-selector-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal-content {
+    width: 80%;
+    max-height: 80%;
+    background: #111;
+    border: 2px solid var(--border-blue);
+    border-radius: 10px;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.selectable-card {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    height: 210px;
+    position: relative;
+}
+
+.selectable-card:hover {
+    transform: scale(2.15); 
+    box-shadow: 0 0 20px var(--btn-yellow);
+    z-index: 100; 
+}
+
+.close-modal {
+    margin-top: 20px;
+}
+
+/* === ZOOM NEL DECKBUILDER E GESTIONE TESTI (RIPOSO vs HOVER) === */
+
+/* 1. Rimpicciolisci i testi quando la carta è NEGLI SLOT A RIPOSO nel Deckbuilder */
+.card-slot-btn:not(:hover) .card-character-fullart .fullart-name {
+    font-size: 0.42rem !important;
+}
+
+.card-slot-btn:not(:hover) .card-character-fullart .fullart-move-text {
+    font-size: 0.32rem !important;
+    line-height: 1.1;
+}
+
+.card-slot-btn:not(:hover) .card-character-fullart .cost-indicator {
+    width: 14px !important;
+    height: 14px !important;
+    font-size: 0.4rem !important;
+}
+
+.card-slot-btn:not(:hover) .card-character-fullart .fullart-moves {
+    gap: 2px !important;
+    padding: 4px !important;
+}
+
+/* 2. Zoom grande al passaggio del mouse nello slot del Deckbuilder */
+.card-slot-btn:hover .card-character-fullart, 
+.card-slot-btn:hover .card-render {
+    transform: scale(2.2); 
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.9); 
+    cursor: pointer;
+}
+
+/* 3. QUANDO LA CARTA È IN HOVER (ZOOMATA): Rimpicciolisci ulteriormente i testi 
+      per impedire che lo zoom li faccia esplodere coprendo l'immagine */
+.card-slot-btn:hover .card-character-fullart .fullart-name {
+    font-size: 0.38rem !important;
+}
+
+.card-slot-btn:hover .card-character-fullart .fullart-move-text {
+    font-size: 0.28rem !important;
+    line-height: 1.15;
+}
+
+.card-slot-btn:hover .card-character-fullart .cost-indicator {
+    width: 14px !important;
+    height: 14px !important;
+    font-size: 0.38rem !important;
+}
+
+.card-slot-btn:hover .card-character-fullart .fullart-moves {
+    gap: 4px !important;
+    padding: 6px !important;
+}
